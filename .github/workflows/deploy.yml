@@ -1,0 +1,28 @@
+name: Deploy to InfinityFree
+on:
+  push:
+    branches:
+      - master
+
+# This environment variable tells GitHub to use Node 24 now
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Updated to v6 which supports Node 24 natively
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Sync Files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ftpupload.net
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: tbpg-hrms.rf.gd/htdocs/
+          protocol: ftp
+          port: 21
+          
