@@ -1,9 +1,12 @@
 name: Deploy to InfinityFree
-
 on:
   push:
     branches:
-      - master  # Change this to 'master' if your default branch is master
+      - main
+
+# Opt into Node 24 now to clear deprecation warnings
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   web-deploy:
@@ -11,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6 # Updated to v6
 
     - name: 📂 Sync files to InfinityFree
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.6 # Updated to v4.3.6
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
@@ -22,4 +25,4 @@ jobs:
         server-dir: htdocs/
         protocol: ftp
         port: 21
-        timeout: 60000 # Increased timeout for free hosting stability
+        timeout: 60000
