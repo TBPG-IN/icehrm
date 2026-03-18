@@ -4,9 +4,9 @@ on:
     branches:
       - master
 
-# Opt into Node 24 now to clear deprecation warnings
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  # This forces GitHub to use Node 24 and silences the deprecation error
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
 
 jobs:
   web-deploy:
@@ -14,15 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
-      uses: actions/checkout@v6 # Updated to v6
+      uses: actions/checkout@v4 # v4 is fine as long as the env above is set
 
     - name: 📂 Sync files to InfinityFree
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.6 # Updated to v4.3.6
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.6
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: htdocs/
+        server-dir: tbpg-hrms.rf.gd/htdocs/
         protocol: ftp
         port: 21
         timeout: 60000
