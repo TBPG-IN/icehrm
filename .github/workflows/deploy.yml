@@ -2,7 +2,7 @@ name: Deploy to InfinityFree
 on:
   push:
     branches:
-      - main
+      - master
 
 # Opt into Node 24 now to clear deprecation warnings
 env:
